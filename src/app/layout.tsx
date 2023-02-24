@@ -6,7 +6,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
 
       <body>
-        <nav>Next.js 13</nav>
+        <nav className="text-red-600">Next.js 13</nav>
         {children}
       </body>
     </html>
