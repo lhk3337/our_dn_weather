@@ -1,4 +1,4 @@
-export function dfs_xy_conv(code: string, v1: string, v2: string) {
+export function dfs_xy_conv(code: string, v1: string | string[] | undefined, v2: string | string[] | undefined) {
   const RE = 6371.00877; // 지구 반경(km)
   const GRID = 5.0; // 격자 간격(km)
   const SLAT1 = 30.0; // 투영 위도1(degree)
