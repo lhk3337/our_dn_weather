@@ -2,14 +2,10 @@ import type { NextPage } from "next";
 import useSWR from "swr";
 import useCurrentLocation from "@libs/useCurrentLocation";
 import Layout from "../components/layout";
+import { weatherType } from "./api/weather";
 interface SWRProps {
   ok: boolean;
-  body: {
-    dataType: string;
-    items: {
-      item: [{ baseDate: "string"; baseTime: string; category: string; nx: number; ny: number; obsrValue: string }];
-    };
-  };
+  body: [weatherType];
 }
 
 const Home: NextPage = () => {
@@ -28,10 +24,10 @@ const Home: NextPage = () => {
     <Layout>
       <main>
         <div>{addrData?.addr}</div>
-        {data?.body.items.item.map((v, index) => (
+        {data?.body.map((v, index) => (
           <div key={index}>
             <span className="text-teal-600">
-              {v.category} : {v.obsrValue}
+              {v.category} : {v.fcstValue} {v.fcstTime}
             </span>
           </div>
         ))}

@@ -1,20 +1,21 @@
 const apiUrl = async (x: number, y: number) => {
-  const url = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst"; /*URL*/
+  const url = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst"; /*URL*/
   function nowHour() {
-    // 날씨 api 데이터가 정시 기준으로 40분 이후에 새로 업데이트 함
-    // 40분전이면 1시간 전 시간을, 40분보다 크면 현재 시간을 가져온다.
+    // 초단기 예보 날씨 api 데이터가 정시 기준으로 45분 이후에 새로 업데이트 함
+    // 45분전이면 1시간 전 시간을, 45분보다 크면 현재 시간을 가져온다.
     const min = new Date().getMinutes();
-    if (min < 40) {
+
+    if (min < 45) {
       const time = (new Date().getHours() - 1).toString().padStart(2, "0");
       if (time === "-1") {
         //00:00일때 처리하기
-        return "23:00";
+        return "23:30";
       } else {
-        return time + "00";
+        return time + "30";
       }
     } else {
       const time = new Date().getHours().toString().padStart(2, "0");
-      return time + "00";
+      return time + "30";
     }
   }
 
