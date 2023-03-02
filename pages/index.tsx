@@ -20,10 +20,14 @@ const Home: NextPage = () => {
     latitude && longitude ? `/api/weather?latitude=${latitude}&longitude=${longitude}` : null,
     fetcher
   );
+  const { data: addrData } = useSWR(
+    latitude && longitude ? `/api/addr?latitude=${latitude}&longitude=${longitude}` : null
+  );
 
   return (
     <Layout>
       <main>
+        <div>{addrData?.addr}</div>
         {data?.body.items.item.map((v, index) => (
           <div key={index}>
             <span className="text-teal-600">
