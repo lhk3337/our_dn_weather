@@ -3,9 +3,13 @@ import useSWR from "swr";
 import useCurrentLocation from "@libs/useCurrentLocation";
 import Layout from "../components/layout";
 import { weatherType } from "./api/weather";
+import Content from "@components/content";
 interface SWRProps {
   ok: boolean;
   body: [weatherType];
+}
+interface WeatherDetailProps {
+  [key: string]: string;
 }
 
 const Home: NextPage = () => {
@@ -20,17 +24,18 @@ const Home: NextPage = () => {
     latitude && longitude ? `/api/addr?latitude=${latitude}&longitude=${longitude}` : null
   );
 
+  const weatherData = {
+    ...data?.body.reduce((acc: WeatherDetailProps, curr) => {
+      acc[curr.category] = curr.fcstValue;
+      return acc;
+    }, {}),
+    addr: addrData?.addr,
+  };
+
   return (
     <Layout>
       <main>
-        <div>{addrData?.addr}</div>
-        {data?.body.map((v, index) => (
-          <div key={index}>
-            <span className="text-teal-600">
-              {v.category} : {v.fcstValue} {v.fcstTime}
-            </span>
-          </div>
-        ))}
+        <Content {...weatherData} />
       </main>
     </Layout>
   );
