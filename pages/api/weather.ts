@@ -38,7 +38,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     };
 
-    const value = item.filter((v: weatherType) => v.fcstTime === currentTime());
+    const value = item
+      .filter((v: weatherType) => v.fcstTime === currentTime())
+      .map(({ baseDate, baseTime, fcstDate, nx, ny, fcstTime, ...rest }: weatherType) => rest);
     res.json({ ok: true, body: value });
   }
 }
