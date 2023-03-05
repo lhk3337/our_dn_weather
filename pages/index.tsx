@@ -34,7 +34,7 @@ const Home: NextPage = () => {
 
   return (
     <Layout>
-      <main>
+      <main className="mx-auto pt-20 px-6 max-w-xl h-[calc(100vh-6rem)]">
         <Content {...weatherData} />
       </main>
     </Layout>
