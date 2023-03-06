@@ -4,10 +4,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Head>
-        <title>Location Weather</title>
+        <title>우리 동네 날씨 </title>
       </Head>
       <Nav />
-      <div className="px-6 bg-[#f9f9f9]">{children}</div>
+      <div className="bg-[#f9f9f9] h-[calc(100vh-6rem)]">{children}</div>
     </>
   );
 }
