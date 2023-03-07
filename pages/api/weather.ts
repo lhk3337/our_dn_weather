@@ -38,14 +38,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     //   }
     // };
 
-    const nowDate = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+    const getToday = () => {
+      const date = new Date();
+      const year = date.getFullYear();
+      const month = ("0" + (1 + date.getMonth())).slice(-2);
+      const day = ("0" + date.getDate()).slice(-2);
+
+      return `${year}${month}${day}`;
+    };
+
     const value = item
       .filter((v: weatherType) =>
         v.baseTime === new Date().getHours() + "00"
-          ? v.fcstTime === new Date().getHours() + 1 + "00" && v.fcstDate === nowDate
-          : v.fcstTime === new Date().getHours() + "00" && v.fcstDate === nowDate
+          ? v.baseTime === "2300"
+            ? v.fcstTime === "0000" && v.fcstDate === getToday()
+            : v.fcstTime === new Date().getHours() + 1 + "00" && v.fcstDate === getToday()
+          : v.baseTime === "2300"
+          ? v.fcstTime === "0000" && v.fcstDate === getToday()
+          : v.fcstTime === new Date().getHours() + "00" && v.fcstDate === getToday()
       )
-      .map(({ baseDate, baseTime, fcstDate, nx, ny, fcstTime, ...rest }: weatherType) => rest);
+      .map(({ nx, ny, ...rest }: weatherType) => rest);
     res.json({ ok: true, body: value });
   }
 }

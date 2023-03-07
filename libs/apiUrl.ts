@@ -18,6 +18,7 @@ const apiUrl = async (x: number, y: number) => {
   //     return time + "30";
   //   }
   // }
+
   function times() {
     let hours = new Date().getHours();
     let result;
@@ -26,19 +27,29 @@ const apiUrl = async (x: number, y: number) => {
     } else {
       result = hours - ((hours + 1) % 3);
     }
-
     return result < 10 ? result.toString().padStart(2, "0") + "00" : result.toString() + "00";
   }
+
+  const getToday = () => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = ("0" + (1 + date.getMonth())).slice(-2);
+    let day;
+    if (times() === "2300") {
+      day = ("0" + (date.getDate() - 1)).slice(-2);
+    } else {
+      day = ("0" + date.getDate()).slice(-2);
+    }
+
+    return `${year}${month}${day}`;
+  };
 
   let queryParams = "?" + encodeURIComponent("serviceKey") + "=" + process.env.SERVICE_KEY;
   queryParams += "&" + encodeURIComponent("pageNo") + "=" + encodeURIComponent("1"); /**/
   queryParams += "&" + encodeURIComponent("numOfRows") + "=" + encodeURIComponent("1000"); /**/
   queryParams += "&" + encodeURIComponent("dataType") + "=" + encodeURIComponent("JSON"); /**/
   queryParams +=
-    "&" +
-    encodeURIComponent("base_date") +
-    "=" +
-    encodeURIComponent(new Date().toISOString().slice(0, 10).replace(/-/g, "")); /*오늘 날짜를 yyyymmdd로 표현 */
+    "&" + encodeURIComponent("base_date") + "=" + encodeURIComponent(getToday()); /*오늘 날짜를 yyyymmdd로 표현 */
   queryParams += "&" + encodeURIComponent("base_time") + "=" + encodeURIComponent(times()); /* 예보 발표 시간  */
   queryParams += "&" + encodeURIComponent("nx") + "=" + encodeURIComponent(x); /**/
   queryParams += "&" + encodeURIComponent("ny") + "=" + encodeURIComponent(y); /**/
