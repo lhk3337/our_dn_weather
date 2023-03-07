@@ -30,16 +30,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       },
     } = response;
 
-    const currentTime = () => {
-      if (new Date().getMinutes() < 45) {
-        return new Date().getHours() + "00";
-      } else {
-        return (new Date().getHours() + 1 === 24 ? "00" : new Date().getHours() + 1) + "00";
-      }
-    };
+    // const currentTime = () => {
+    //   if (new Date().getMinutes() < 10) {
+    //     return new Date().getHours() + "00";
+    //   } else {
+    //     return new Date().getHours() + 1 + "00";
+    //   }
+    // };
 
+    const nowDate = new Date().toISOString().slice(0, 10).replace(/-/g, "");
     const value = item
-      .filter((v: weatherType) => v.fcstTime === currentTime())
+      .filter((v: weatherType) =>
+        v.baseTime === new Date().getHours() + "00"
+          ? v.fcstTime === new Date().getHours() + 1 + "00" && v.fcstDate === nowDate
+          : v.fcstTime === new Date().getHours() + "00" && v.fcstDate === nowDate
+      )
       .map(({ baseDate, baseTime, fcstDate, nx, ny, fcstTime, ...rest }: weatherType) => rest);
     res.json({ ok: true, body: value });
   }
