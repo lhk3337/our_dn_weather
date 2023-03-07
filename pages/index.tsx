@@ -4,6 +4,7 @@ import useCurrentLocation from "@libs/useCurrentLocation";
 import Layout from "../components/layout";
 import { weatherType } from "./api/weather";
 import Content from "@components/content";
+import Spinner from "@components/spinner";
 interface SWRProps {
   ok: boolean;
   body: [weatherType];
@@ -34,9 +35,7 @@ const Home: NextPage = () => {
 
   return (
     <Layout>
-      <main className="mx-auto py-20 max-w-xl px-8 sm:px-0">
-        <Content {...weatherData} />
-      </main>
+      <main className="mx-auto py-20 max-w-xl px-8 sm:px-0">{!data ? <Spinner /> : <Content {...weatherData} />}</main>
     </Layout>
   );
 };
