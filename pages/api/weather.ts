@@ -47,15 +47,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return `${year}${month}${day}`;
     };
 
+    const getTime = (n: number) => {
+      return (new Date().getHours() + n).toString().padStart(2, "0"); // 09:00형식
+    };
+
     const value = item
       .filter((v: weatherType) =>
-        v.baseTime === new Date().getHours() + "00"
+        v.baseTime === getTime(0) + "00"
           ? v.baseTime === "2300"
             ? v.fcstTime === "0000" && v.fcstDate === getToday()
-            : v.fcstTime === new Date().getHours() + 1 + "00" && v.fcstDate === getToday()
+            : v.fcstTime === getTime(1) + "00" && v.fcstDate === getToday()
           : v.baseTime === "2300"
           ? v.fcstTime === "0000" && v.fcstDate === getToday()
-          : v.fcstTime === new Date().getHours() + "00" && v.fcstDate === getToday()
+          : v.fcstTime === getTime(0) + "00" && v.fcstDate === getToday()
       )
       .map(({ nx, ny, ...rest }: weatherType) => rest);
     res.json({ ok: true, body: value });
