@@ -5,27 +5,16 @@ import Water from "assets/icon/water";
 import Wind from "assets/icon/wind";
 import React from "react";
 import Item from "./items";
-import WeatherImage from "./weatherImage";
+import WeatherInfo from "./weatherinfo";
+
 interface Props {
   [key: string]: string;
 }
 export default function Content({ PTY, REH, PCP, SKY, TMP, VEC, WSD, addr, POP, forecastTime }: Props) {
   return (
-    <div className="space-y-12">
-      <div className="rounded-xl shadow-lg bg-[#EAECEF] mb-10 text-black relative">
-        <div className="flex justify-between items-center p-12">
-          <div className="space-y-32">
-            <h1 className="text-5xl font-bold">{addr}</h1>
-            <h1 className="text-8xl font-bold">{TMP}º</h1>
-          </div>
-          <WeatherImage skyState={SKY} pty={PTY} />
-        </div>
-        <div className="text-slate-400 font-medium text-sm rounded-b-xl p-4 flex flex-col items-center bg-white">
-          <span>예보 시간</span>
-          <span>{forecastTime.replace(/(.{2})/, "$1:")}</span>
-        </div>
-      </div>
-      <div className="sm:grid sm:grid-cols-2 sm:gap-5 flex flex-col gap-4">
+    <div className="space-y-12 py-8">
+      <WeatherInfo addr={addr} TMP={TMP} SKY={SKY} PTY={PTY} forecastTime={forecastTime} />
+      <div className="sm:grid sm:grid-cols-2 sm:gap-5 flex flex-col space-y-8 sm:space-y-0">
         <Item name="강수 확률" Image={Umbrella} data={`${POP}%`} />
         <Item name="강수량" Image={Precipitation} data={`${PCP === "강수없음" ? "0" : PCP} mm`} />
         <Item name="습도" Image={Water} data={`${REH}%`} />
