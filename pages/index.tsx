@@ -16,10 +16,8 @@ interface WeatherDetailProps {
 const Home: NextPage = () => {
   const { latitude, longitude } = useCurrentLocation();
 
-  const fetcher = (url: string) => fetch(url).then((r) => r.json());
   const { data } = useSWR<SWRProps>(
-    latitude && longitude ? `/api/weather?latitude=${latitude}&longitude=${longitude}` : null,
-    fetcher
+    latitude && longitude ? `/api/weather?latitude=${latitude}&longitude=${longitude}` : null
   );
   const { data: addrData } = useSWR(
     latitude && longitude ? `/api/addr?latitude=${latitude}&longitude=${longitude}` : null
