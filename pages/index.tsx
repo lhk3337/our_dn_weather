@@ -35,7 +35,15 @@ const Home: NextPage = () => {
   };
   return (
     <Layout>
-      <main className="mx-auto py-20 max-w-xl px-8 sm:px-0">{!data ? <Spinner /> : <Content {...weatherData} />}</main>
+      <main className="mx-auto max-w-xl px-8 sm:px-0">
+        {!data ? (
+          <div className="py-20">
+            <Spinner />
+          </div>
+        ) : (
+          <Content {...weatherData} />
+        )}
+      </main>
     </Layout>
   );
 };

@@ -1,6 +1,6 @@
 export default function Spinner() {
   return (
-    <div className="flex justify-center items-center mt-3">
+    <div className="flex py-20 justify-center items-center h-[calc(100vh-16rem)]">
       <svg
         aria-hidden="true"
         className="w-20 h-20 mr-2 text-gray-200 animate-spin  fill-[#5ECD91]"
