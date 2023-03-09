@@ -4,7 +4,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Nav />
-      <div>{children}</div>
+      <div className="mx-auto max-w-xl px-8 sm:px-0">{children}</div>
     </>
   );
 }

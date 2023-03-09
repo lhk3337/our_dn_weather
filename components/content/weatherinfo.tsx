@@ -8,8 +8,8 @@ export default function WeatherInfo({ addr, TMP, SKY, PTY, forecastTime }: Props
     <div className="rounded-xl shadow-lg bg-[#EAECEF] mb-10 text-black relative">
       <div className="flex justify-between items-center p-12">
         <div className="space-y-32">
-          <h1 className="text-5xl font-bold">{addr}</h1>
-          <h1 className="text-8xl font-bold">{TMP}º</h1>
+          <h1 className="text-4xl sm:text-5xl font-bold">{addr}</h1>
+          <h1 className="text-6xl sm:text-8xl font-bold">{TMP}º</h1>
         </div>
         <WeatherImage skyState={SKY} pty={PTY} />
       </div>
