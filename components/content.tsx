@@ -4,16 +4,17 @@ import Umbrella from "assets/icon/umbrella";
 import Water from "assets/icon/water";
 import Wind from "assets/icon/wind";
 import React from "react";
+import Item from "./items";
 import WeatherImage from "./weatherImage";
 interface Props {
   [key: string]: string;
 }
-export default function Content({ PTY, REH, PCP, SKY, TMP, VEC, WSD, addr, POP }: Props) {
+export default function Content({ PTY, REH, PCP, SKY, TMP, VEC, WSD, addr, POP, forecastTime }: Props) {
   return (
     <div className="space-y-12">
-      <div className="rounded-xl bg-[#EAECEF] shadow-lg p-12 mb-10 text-black">
-        <div className="flex justify-between items-center">
-          <div className="space-y-32 ">
+      <div className="rounded-xl shadow-lg bg-[#EAECEF] mb-10 text-black relative">
+        <div className="flex justify-between items-center p-12">
+          <div className="space-y-32">
             <h1 className="text-5xl font-bold">{addr}</h1>
             <h1 className="text-8xl font-bold">{TMP}º</h1>
           </div>
@@ -21,38 +22,10 @@ export default function Content({ PTY, REH, PCP, SKY, TMP, VEC, WSD, addr, POP }
         </div>
       </div>
       <div className="sm:grid sm:grid-cols-2 sm:gap-5 flex flex-col gap-4">
-        <div className="rounded-xl bg-[#EAECEF] p-6 text-black flex flex-col space-y-2">
-          <div className="text-[#7E8795] text-lg flex items-center space-x-2">
-            <Umbrella />
-            <span>강수 확률</span>
-          </div>
-          <span className="text-2xl font-extrabold ml-4">{POP}%</span>
-        </div>
-
-        <div className="rounded-xl bg-[#EAECEF] p-6 text-black flex flex-col space-y-2">
-          <div className="text-[#7E8795]  text-lg  flex items-center space-x-2">
-            <Precipitation />
-            <span>강수량</span>
-          </div>
-          <span className="text-2xl font-extrabold ml-4">{PCP === "강수없음" ? "0" : PCP} mm</span>
-        </div>
-
-        <div className="rounded-xl bg-[#EAECEF] p-6 text-black flex flex-col space-y-2">
-          <div className="text-[#7E8795]  text-lg  flex items-center space-x-2">
-            <Water />
-            <span>습도</span>
-          </div>
-          <span className="text-2xl font-extrabold ml-4">{REH}%</span>
-        </div>
-        <div className="rounded-xl bg-[#EAECEF] p-6 text-black flex flex-col space-y-2">
-          <div className="text-[#7E8795]  text-lg  flex items-center space-x-2">
-            <Wind />
-            <span>풍속</span>
-          </div>
-          <span className="text-2xl font-extrabold ml-4">
-            {CardinalPoints(VEC)}풍 {WSD}m/s
-          </span>
-        </div>
+        <Item name="강수 확률" Image={Umbrella} data={`${POP}%`} />
+        <Item name="강수량" Image={Precipitation} data={`${PCP === "강수없음" ? "0" : PCP} mm`} />
+        <Item name="습도" Image={Water} data={`${REH}%`} />
+        <Item name="풍속" Image={Wind} data={`${CardinalPoints(VEC)}풍 ${WSD}m/s`} />
       </div>
     </div>
   );
