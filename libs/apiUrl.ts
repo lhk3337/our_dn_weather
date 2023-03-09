@@ -20,10 +20,13 @@ const apiUrl = async (x: number, y: number) => {
   // }
 
   function times() {
-    const curr = new Date();
-    const utc = curr.getTime() + curr.getTimezoneOffset() * 60 * 1000;
-    const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
-    const hours = new Date(utc + KR_TIME_DIFF).getHours(); // utc 설정으로 다른 환경의 시간때에도 한국 시간을 보여줄 수 있음
+    // const curr = new Date();
+    // const utc = curr.getTime() + curr.getTimezoneOffset() * 60 * 1000;
+    // const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
+    // const hours = new Date(utc + KR_TIME_DIFF).getHours(); // utc 설정으로 다른 환경의 시간때에도 한국 시간을 보여줄 수 있음
+    // const date = new Date();
+    // const hours = Number(new Intl.DateTimeFormat("en-GB", { hour: "numeric", timeZone: "Asia/Seoul" }).format(date));
+    let hours = new Date().getHours();
 
     let result;
     if (hours < 2) {
@@ -35,10 +38,11 @@ const apiUrl = async (x: number, y: number) => {
   }
 
   const getToday = () => {
-    const curr = new Date();
-    const utc = curr.getTime() + curr.getTimezoneOffset() * 60 * 1000;
-    const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
-    const date = new Date(utc + KR_TIME_DIFF);
+    // const curr = new Date();
+    // const utc = curr.getTime() + curr.getTimezoneOffset() * 60 * 1000;
+    // const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
+    // const date = new Date(utc + KR_TIME_DIFF);
+    const date = new Date();
     const year = date.getFullYear();
     const month = ("0" + (1 + date.getMonth())).slice(-2);
     let day;
