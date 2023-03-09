@@ -31,8 +31,8 @@ const Home: NextPage = () => {
       return acc;
     }, {}),
     addr: addrData?.addr,
+    forecastTime: data?.body[0].fcstTime as string,
   };
-
   return (
     <Layout>
       <main className="mx-auto py-20 max-w-xl px-8 sm:px-0">{!data ? <Spinner /> : <Content {...weatherData} />}</main>

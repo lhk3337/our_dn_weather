@@ -20,6 +20,10 @@ export default function Content({ PTY, REH, PCP, SKY, TMP, VEC, WSD, addr, POP, 
           </div>
           <WeatherImage skyState={SKY} pty={PTY} />
         </div>
+        <div className="text-slate-400 font-medium text-sm rounded-b-xl p-4 flex flex-col items-center bg-white">
+          <span>예보 시간</span>
+          <span>{forecastTime.replace(/(.{2})/, "$1:")}</span>
+        </div>
       </div>
       <div className="sm:grid sm:grid-cols-2 sm:gap-5 flex flex-col gap-4">
         <Item name="강수 확률" Image={Umbrella} data={`${POP}%`} />
