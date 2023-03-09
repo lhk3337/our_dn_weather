@@ -37,13 +37,14 @@ const apiUrl = async (x: number, y: number) => {
     // const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
     // const date = new Date(utc + KR_TIME_DIFF);
     const date = new Date();
-    const year = date.getFullYear();
-    const month = ("0" + (1 + date.getMonth())).slice(-2);
+    const year = new Date().toLocaleString("en-GB", { year: "numeric", timeZone: "Asia/Seoul" } as any);
+    const month = (1 + date.getMonth()).toString().padStart(2, "0");
+
     let day;
     if (times() === "2300") {
-      day = ("0" + (date.getDate() - 1)).slice(-2);
+      day = (date.getDate() - 1).toString().padStart(2, "0");
     } else {
-      day = ("0" + date.getDate()).slice(-2);
+      day = date.getDate().toString().padStart(2, "0");
     }
 
     return `${year}${month}${day}`;
