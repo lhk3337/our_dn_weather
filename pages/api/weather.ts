@@ -40,15 +40,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const getToday = () => {
       const date = new Date();
-      const year = date.getFullYear();
-      const month = ("0" + (1 + date.getMonth())).slice(-2);
-      const day = ("0" + date.getDate()).slice(-2);
+      const year = date.toLocaleString("en-GB", { year: "numeric", timeZone: "Asia/Seoul" } as any);
+      const month = date.toLocaleString("en-GB", { month: "numeric", timeZone: "Asia/Seoul" } as any).padStart(2, "0");
+      const day = date.toLocaleDateString("en-GB", { day: "2-digit", timeZone: "Asia/Seoul" }).padStart(2, "0");
 
       return `${year}${month}${day}`;
     };
 
     const getTime = (n: number) => {
-      return (new Date().getHours() + n).toString().padStart(2, "0"); // 09:00형식
+      const hours = Number(new Date().toLocaleString("en-GB", { hour: "numeric", timeZone: "Asia/Seoul" } as any));
+      return (hours + n).toString().padStart(2, "0"); // 09:00형식
     };
 
     const value = item
