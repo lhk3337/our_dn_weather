@@ -32,26 +32,20 @@ const apiUrl = async (x: number, y: number) => {
   }
 
   const getToday = () => {
-    // const curr = new Date();
-    // const utc = curr.getTime() + curr.getTimezoneOffset() * 60 * 1000;
-    // const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
-    // const date = new Date(utc + KR_TIME_DIFF);
     const date = new Date();
-    const year = new Date().toLocaleString("en-GB", { year: "numeric", timeZone: "Asia/Seoul" } as any);
-    const month = new Date()
-      .toLocaleString("en-GB", { month: "numeric", timeZone: "Asia/Seoul" } as any)
-      .padStart(2, "0");
+    const year = date.toLocaleString("en-GB", { year: "numeric", timeZone: "Asia/Seoul" } as any);
+    const month = date.toLocaleString("en-GB", { month: "numeric", timeZone: "Asia/Seoul" } as any).padStart(2, "0");
 
-    let day;
     if (times() === "2300") {
-      day = (date.getDate() - 1).toString().padStart(2, "0");
+      const day = (Number(date.toLocaleDateString("en-GB", { day: "2-digit", timeZone: "Asia/Seoul" })) - 1)
+        .toString()
+        .padStart(2, "0");
+      return `${year}${month}${day}`;
     } else {
-      day = date.getDate().toString().padStart(2, "0");
+      const day = date.toLocaleDateString("en-GB", { day: "2-digit", timeZone: "Asia/Seoul" }).padStart(2, "0");
+      return `${year}${month}${day}`;
     }
-
-    return `${year}${month}${day}`;
   };
-
   let queryParams = "?" + encodeURIComponent("serviceKey") + "=" + process.env.SERVICE_KEY;
   queryParams += "&" + encodeURIComponent("pageNo") + "=" + encodeURIComponent("1"); /**/
   queryParams += "&" + encodeURIComponent("numOfRows") + "=" + encodeURIComponent("1000"); /**/
