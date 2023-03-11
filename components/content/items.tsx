@@ -13,8 +13,8 @@ interface Props {
 export default function Items({ TMN, TMX, POP, PCP, REH, VEC, WSD }: Props) {
   return (
     <div className="sm:grid sm:grid-cols-2 sm:gap-5 flex flex-col space-y-8 sm:space-y-0">
-      <Item name="최저온도" Image={lowTemp} data={`${TMN}º`} />
-      <Item name="최고온도" Image={hightTemp} data={`${TMX}º`} />
+      <Item name="최저온도" Image={lowTemp} data={`${TMN}º`} isrowColor />
+      <Item name="최고온도" Image={hightTemp} data={`${TMX}º`} ishighColor />
       <Item name="강수 확률" Image={Umbrella} data={`${POP}%`} />
       <Item name="강수량" Image={Precipitation} data={`${PCP === "강수없음" ? "0" : PCP} mm`} />
       <Item name="습도" Image={Water} data={`${REH}%`} />
