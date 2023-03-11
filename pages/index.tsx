@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import useSWR from "swr";
-import useCurrentLocation from "@libs/useCurrentLocation";
+import useCurrentLocation from "@libs/client/useCurrentLocation";
 import Layout from "../components/layout";
 import { weatherType } from "./api/weather";
 import Content from "@components/content";
@@ -28,9 +28,10 @@ const Home: NextPage = () => {
       acc[curr.category] = curr.fcstValue;
       return acc;
     }, {}),
-    addr: addrData?.addr,
+    addr: addrData?.addr as string,
     forecastTime: data?.body[0].fcstTime as string,
   };
+
   return (
     <Layout>
       <main>{!data ? <Spinner /> : <Content {...weatherData} />}</main>
