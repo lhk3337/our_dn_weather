@@ -1,17 +1,24 @@
-interface Props {
-  name: string;
-  Image: any;
-  data: string;
-}
+import Item from "./item";
+import CardinalPoints from "@libs/client/cardinalPoints";
+import Precipitation from "assets/icon/precipitation";
+import Umbrella from "assets/icon/umbrella";
+import Water from "assets/icon/water";
+import Wind from "assets/icon/wind";
+import hightTemp from "assets/icon/highTemp";
+import lowTemp from "assets/icon/lowtemp";
 
-export default function Item({ name, Image, data }: Props) {
+interface Props {
+  [key: string]: string;
+}
+export default function Items({ TMN, TMX, POP, PCP, REH, VEC, WSD }: Props) {
   return (
-    <div className=" shadow-lg rounded-xl bg-[#EAECEF] p-6 text-black flex flex-col space-y-2 mb-">
-      <div className="text-[#7E8795] text-lg flex items-center space-x-2">
-        {Image()}
-        <span>{name}</span>
-      </div>
-      <span className="text-2xl font-extrabold ml-4">{data}</span>
+    <div className="sm:grid sm:grid-cols-2 sm:gap-5 flex flex-col space-y-8 sm:space-y-0">
+      <Item name="최저온도" Image={lowTemp} data={`${TMN}º`} />
+      <Item name="최고온도" Image={hightTemp} data={`${TMX}º`} />
+      <Item name="강수 확률" Image={Umbrella} data={`${POP}%`} />
+      <Item name="강수량" Image={Precipitation} data={`${PCP === "강수없음" ? "0" : PCP} mm`} />
+      <Item name="습도" Image={Water} data={`${REH}%`} />
+      <Item name="풍속" Image={Wind} data={`${CardinalPoints(VEC)}풍 ${WSD}m/s`} />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { dfs_xy_conv } from "@libs/xy_conv";
-import apiUrl from "@libs/apiUrl";
+import { dfs_xy_conv } from "@libs/server/xy_conv";
+import apiUrl from "@libs/server/apiUrl";
+
 export interface weatherType {
   baseDate: string;
   baseTime: string;
@@ -20,7 +21,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (!latitude || !longitude) return;
 
     const { x, y } = dfs_xy_conv("toXY", latitude, longitude); // 위도와 경도를 격자x와 격자y로 변환해주는 함수
-    const response = await apiUrl(x, y); // api url 주소를 함수로 설정
+    const response = await apiUrl(x, y, false); // api url 주소를 함수로 설정
+    const lowHightemper = await apiUrl(x, y, true);
 
     const {
       response: {
@@ -29,6 +31,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         },
       },
     } = response;
+
+    const {
+      response: {
+        body: {
+          items: { item: tempItem },
+        },
+      },
+    } = lowHightemper;
 
     // const currentTime = () => {
     //   if (new Date().getMinutes() < 10) {
@@ -62,7 +72,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           ? v.fcstTime === "0000" && v.fcstDate === getToday()
           : v.fcstTime === getTime(0) + "00" && v.fcstDate === getToday()
       )
-      .map(({ nx, ny, ...rest }: weatherType) => rest);
-    res.json({ ok: true, body: value });
+      .map(({ nx, ny, baseDate, baseTime, fcstDate, ...rest }: weatherType) => rest);
+    const tempValue = tempItem
+      .filter(
+        (v: weatherType) =>
+          v.baseTime === "0200" && (v.category === "TMN" || v.category === "TMX") && v.fcstDate === getToday()
+      )
+      .map(({ nx, ny, baseDate, baseTime, fcstDate, fcstTime, ...rest }: weatherType) => rest);
+
+    res.json({ ok: true, body: [...value, ...tempValue] });
   }
 }
