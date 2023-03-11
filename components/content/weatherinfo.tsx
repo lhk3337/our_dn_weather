@@ -1,5 +1,5 @@
 import WeatherImage from "../weatherImage";
-import { today } from "@libs/today";
+import { isToday } from "@libs/client/isToday";
 interface Props {
   [key: string]: string;
 }
@@ -18,7 +18,7 @@ export default function WeatherInfo({ addr, TMP, SKY, PTY, forecastTime }: Props
           <span>예보 기준</span>
           <span>{forecastTime.replace(/(.{2})/, "$1:")}</span>
         </div>
-        <span>{today()}</span>
+        <span>{isToday()}</span>
       </div>
     </div>
   );
